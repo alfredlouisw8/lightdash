@@ -1,9 +1,11 @@
 import { type SlackChannelProjectMapping } from './slack';
 
 export type SlackSettings = {
+    enabled: boolean;
+    errorMessage?: string;
     organizationUuid: string;
     slackTeamName: string;
-    createdAt: Date;
+    createdAt: Date | undefined;
     token?: string;
     scopes: string[];
     notificationChannel: string | undefined;

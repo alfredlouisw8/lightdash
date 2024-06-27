@@ -42,6 +42,8 @@ export class SlackIntegrationService<
         }
         const response: SlackSettings = {
             organizationUuid,
+            enabled: slackAuth.enabled,
+            errorMessage: slackAuth.errorMessage,
             slackTeamName: slackAuth.slackTeamName,
             createdAt: slackAuth.createdAt,
             scopes: slackAuth.scopes,

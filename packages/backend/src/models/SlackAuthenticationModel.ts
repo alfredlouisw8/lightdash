@@ -117,17 +117,17 @@ export class SlackAuthenticationModel {
             )
             .select<(DbSlackAuthTokens & DbOrganization)[]>('*')
             .where('organization_uuid', organizationUuid);
-        if (row === undefined) {
-            throw new Error(`Could not find slack installation`);
-        }
+
         return {
-            createdAt: row.created_at,
-            slackTeamName: row.installation?.team?.name || 'Slack',
-            organizationUuid: row.organization_uuid,
-            token: row.installation?.bot?.token,
-            scopes: row.installation?.bot?.scopes || [],
-            notificationChannel: row.notification_channel ?? undefined,
-            appProfilePhotoUrl: row.app_profile_photo_url ?? undefined,
+            enabled: Boolean(row),
+            errorMessage: row ? '' : 'Could not find slack installation',
+            createdAt: row?.created_at,
+            slackTeamName: row?.installation?.team?.name || 'Slack',
+            organizationUuid,
+            token: row?.installation?.bot?.token,
+            scopes: row?.installation?.bot?.scopes || [],
+            notificationChannel: row?.notification_channel ?? undefined,
+            appProfilePhotoUrl: row?.app_profile_photo_url ?? undefined,
         };
     }
 

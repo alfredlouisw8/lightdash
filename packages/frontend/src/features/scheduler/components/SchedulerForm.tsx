@@ -344,6 +344,7 @@ const SchedulerForm: FC<Props> = ({
         } else {
             if (
                 slackQuery.data?.slackTeamName === undefined ||
+                !slackQuery.data.enabled ||
                 slackQuery.isError
             ) {
                 return SlackStates.NO_SLACK;
@@ -354,7 +355,9 @@ const SchedulerForm: FC<Props> = ({
         }
     }, [slackQuery]);
 
-    const slackChannelsQuery = useSlackChannels();
+    const slackChannelsQuery = useSlackChannels({
+        enabled: slackState === SlackStates.SUCCESS,
+    });
 
     const slackChannels = useMemo(() => {
         return (slackChannelsQuery.data || [])
