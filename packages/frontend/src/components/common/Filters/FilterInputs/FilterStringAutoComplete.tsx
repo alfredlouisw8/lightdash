@@ -68,6 +68,7 @@ const FilterStringAutoComplete: FC<Props> = ({
 
     const handleChange = useCallback(
         (updatedValues: string[]) => {
+            console.log('change');
             onChange(uniq(updatedValues));
         },
         [onChange],
@@ -75,6 +76,7 @@ const FilterStringAutoComplete: FC<Props> = ({
 
     const handleAdd = useCallback(
         (newValue: string) => {
+            console.log('add');
             handleChange([...values, newValue]);
             return newValue;
         },
@@ -83,6 +85,7 @@ const FilterStringAutoComplete: FC<Props> = ({
 
     const handleAddMultiple = useCallback(
         (newValues: string[]) => {
+            console.log('add multiple');
             handleChange([...values, ...newValues]);
             return newValues;
         },
@@ -91,6 +94,7 @@ const FilterStringAutoComplete: FC<Props> = ({
 
     const handlePaste = useCallback(
         (event: React.ClipboardEvent<HTMLInputElement>) => {
+            console.log('paste');
             const clipboardData = event.clipboardData.getData('Text');
             const clipboardDataArray = clipboardData
                 .split(/\,|\n/)
@@ -127,6 +131,8 @@ const FilterStringAutoComplete: FC<Props> = ({
             label: value,
         }));
     }, [results, values]);
+
+    console.log('test', data, values);
 
     const searchedMaxResults = resultsSet.size >= MAX_AUTOCOMPLETE_RESULTS;
     // memo override component so list doesn't scroll to the top on each click
@@ -188,6 +194,11 @@ const FilterStringAutoComplete: FC<Props> = ({
                         background: 'white',
                     },
                 },
+                value: {
+                    span: {
+                        whiteSpace: 'pre',
+                    },
+                },
             }}
             disableSelectedItemFiltering
             searchable
@@ -204,11 +215,15 @@ const FilterStringAutoComplete: FC<Props> = ({
             dropdownComponent={DropdownComponentOverride}
             itemComponent={({ label, ...others }) =>
                 others.disabled ? (
-                    <Text color="dimmed" {...others}>
+                    <Text color="dimmed" {...others} sx={{ whiteSpace: 'pre' }}>
                         {label}
                     </Text>
                 ) : (
-                    <Highlight highlight={search} {...others}>
+                    <Highlight
+                        highlight={search}
+                        {...others}
+                        sx={{ whiteSpace: 'pre' }}
+                    >
                         {label}
                     </Highlight>
                 )

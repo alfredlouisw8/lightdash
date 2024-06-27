@@ -62,6 +62,10 @@ export const Table = styled.table<{ $showFooter: boolean }>`
         vertical-align: top;
     }
 
+    td span {
+        white-space: pre;
+    }
+
     th {
         color: #1c2127;
         font-weight: 600;
